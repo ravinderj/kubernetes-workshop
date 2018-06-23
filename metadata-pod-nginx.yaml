@@ -1,0 +1,36 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: mywebserver
+  labels:
+    type: mywebserver
+spec:
+  volumes:
+    - name: public
+      persistentVolumeClaim:
+        claimName: mypvc
+  containers:
+    - name: mywebserver
+      image: nginx
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: public
+
+
+---
+
+
+kind: Service
+apiVersion: v1
+metadata:
+ name: mywebservice
+spec:
+ selector:
+   type: mywebserver
+ ports:
+ - protocol: TCP
+   port: 80
+   targetPort: 80
+ type: NodePort

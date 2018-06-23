@@ -1,0 +1,21 @@
+---
+
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: metadata-replicaset
+spec:
+  replicas: 6
+  selector:
+    matchLabels:
+      env: dev
+  template:
+    metadata:
+      labels:
+        env: dev
+    spec:
+      containers:
+      - name: metadata-service
+        image: ravinderj/metadata:6.0
+        ports:
+        - containerPort: 8080
